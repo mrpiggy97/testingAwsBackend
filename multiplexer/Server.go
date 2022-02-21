@@ -19,9 +19,9 @@ type Server struct {
 
 func (serverInstance *Server) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
 	var allowedMethods string = strings.Join(serverInstance.allowedMethods, ",")
+	message := fmt.Sprintf("server recieved request from remote address %v", request.RemoteAddr)
 	writer.Header().Add("Access-Control-Allow-Origin", serverInstance.allowedCrossSiteOrigin)
 	writer.Header().Add("Access-Control-Allow-Methods", allowedMethods)
-	message := fmt.Sprintf("server recieved request from remote address %v", request.RemoteAddr)
 	log.Info().Msg(message)
 	request = middlewares.ApplyMiddlewares(request)
 	serverInstance.router.ServeHTTP(writer, request)
