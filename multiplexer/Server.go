@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/julienschmidt/httprouter"
+	"github.com/mrpiggy97/testingAwsBackend/handlers"
 	"github.com/mrpiggy97/testingAwsBackend/middlewares"
 	"github.com/rs/zerolog/log"
 )
@@ -28,5 +29,9 @@ func NewServer() *Server {
 		Router:                 httprouter.New(),
 		allowedCrossSiteOrigin: os.Getenv("ALLOWED_CROSS_SITE_ORIGIN"),
 	}
+	multiplexer.Router.GET("/get-random-number", handlers.RandomNumberHandler)
+	multiplexer.Router.POST("/recieve-post-request", handlers.RecievePostRequest)
+	multiplexer.Router.PUT("/recieve-put-request", handlers.RecievePutRequest)
+	multiplexer.Router.DELETE("/recieve-delete-request", handlers.RecieveDeleteRequest)
 	return multiplexer
 }
