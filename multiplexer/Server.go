@@ -29,9 +29,9 @@ func NewServer() *Server {
 		Router:                 httprouter.New(),
 		allowedCrossSiteOrigin: os.Getenv("ALLOWED_CROSS_SITE_ORIGIN"),
 	}
-	multiplexer.Router.GET("/get-random-number", handlers.RandomNumberHandler)
-	multiplexer.Router.POST("/recieve-post-request", handlers.RecievePostRequest)
-	multiplexer.Router.PUT("/recieve-put-request", handlers.RecievePutRequest)
-	multiplexer.Router.DELETE("/recieve-delete-request", handlers.RecieveDeleteRequest)
+	multiplexer.Router.GET("/api/v1/get-random-number", handlers.RandomNumberHandler)
+	multiplexer.Router.POST("/api/v1/recieve-post-request", handlers.RecievePostRequest)
+	multiplexer.Router.PUT("/api/v1/recieve-put-request", handlers.RecievePutRequest)
+	multiplexer.Router.DELETE("/api/v1/recieve-delete-request", handlers.RecieveDeleteRequest)
 	return multiplexer
 }

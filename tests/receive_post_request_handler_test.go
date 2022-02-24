@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"os"
 	"testing"
 
 	"github.com/mrpiggy97/testingAwsBackend/multiplexer"
@@ -26,17 +27,24 @@ func TestRecievePostRequestHandler(testCase *testing.T) {
 	var client *http.Client = &http.Client{}
 	request, requestError := http.NewRequest(
 		"POST",
-		"http://localhost:8000/recieve-post-request",
+		"http://localhost:8000/api/v1/recieve-post-request",
 		buffer,
 	)
 	if requestError != nil {
 		testCase.Error(requestError.Error())
+		os.Exit(2)
 	}
 
 	//send request and make tests
 	response, responseError := client.Do(request)
 	if responseError != nil {
 		testCase.Error(responseError.Error())
+		os.Exit(2)
+	}
+
+	if response.StatusCode != 202 {
+		testCase.Error(response.Status)
+		os.Exit(2)
 	}
 	decodedResponse, _ := io.ReadAll(response.Body)
 	log.Info().Msg(string(decodedResponse))

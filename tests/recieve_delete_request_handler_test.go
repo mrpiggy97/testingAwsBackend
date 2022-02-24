@@ -3,6 +3,7 @@ package tests
 import (
 	"io"
 	"net/http"
+	"os"
 	"testing"
 
 	"github.com/mrpiggy97/testingAwsBackend/multiplexer"
@@ -18,18 +19,25 @@ func TestRecieveDeleteRequestHandler(testCase *testing.T) {
 	var client *http.Client = &http.Client{}
 	request, requestError := http.NewRequest(
 		"DELETE",
-		"http://localhost:8000/recieve-delete-request",
+		"http://localhost:8000/api/v1/recieve-delete-request",
 		nil,
 	)
 
 	if requestError != nil {
 		testCase.Error(requestError.Error())
+		os.Exit(2)
 	}
 
 	//make request and tests
 	response, responseError := client.Do(request)
 	if responseError != nil {
 		testCase.Error(responseError.Error())
+		os.Exit(2)
+	}
+
+	if response.StatusCode != 202 {
+		testCase.Error(response.Status)
+		os.Exit(2)
 	}
 	decodedResponse, _ := io.ReadAll(response.Body)
 	log.Info().Msg(string(decodedResponse))
