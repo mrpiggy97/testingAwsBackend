@@ -1,4 +1,4 @@
-package tests
+package handlers_test
 
 import (
 	"bytes"
@@ -11,7 +11,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func TestRecievePostRequestHandler(testCase *testing.T) {
+func testRecievePostRequestHandler(testCase *testing.T) {
 
 	//run server
 	go multiplexer.Runserver()
@@ -45,4 +45,8 @@ func TestRecievePostRequestHandler(testCase *testing.T) {
 		decodedResponse, _ := io.ReadAll(response.Body)
 		log.Info().Msg(string(decodedResponse))
 	}
+}
+
+func TestRecievePostRequestHandler(testCase *testing.T) {
+	testCase.Run("action=test-recieve-post-request-handler", testRecievePostRequestHandler)
 }

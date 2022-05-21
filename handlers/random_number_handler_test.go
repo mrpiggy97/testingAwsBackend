@@ -1,4 +1,4 @@
-package tests
+package handlers_test
 
 import (
 	"io"
@@ -11,7 +11,7 @@ import (
 	"github.com/mrpiggy97/testingAwsBackend/multiplexer"
 )
 
-func TestRandomNumberHandler(testCase *testing.T) {
+func testRandomNumberHandler(testCase *testing.T) {
 	go multiplexer.Runserver()
 	//slee to give server time to start
 	time.Sleep(time.Second * 1)
@@ -39,4 +39,8 @@ func TestRandomNumberHandler(testCase *testing.T) {
 			)
 		}
 	}
+}
+
+func TestRandomNumberHandler(testCase *testing.T) {
+	testCase.Run("action=test-random-number-handler", testRandomNumberHandler)
 }
